@@ -5,8 +5,12 @@ import htmlmin from 'gulp-htmlmin'
 import browserSync from 'browser-sync'
 import notify from 'gulp-notify'
 import flatten from 'gulp-flatten'
+import gulpIf from 'gulp-if'
 import { readFileSync } from 'fs'
+import { isProduction } from '../uttils/isProduction.js'
 import { PATHS } from '../config/paths.js'
+
+const IS_PROD = isProduction()
 
 export default function html() {
     const data = readFileSync('./data.json', 'utf-8')
@@ -24,7 +28,7 @@ export default function html() {
                 data: dataJSON,
             }),
         )
-        .pipe(htmlmin({ collapseWhitespace: true }))
+        .pipe(gulpIf(IS_PROD, htmlmin({ collapseWhitespace: true })))
         .pipe(flatten({ includeParents: 0 }))
         .pipe(gulp.dest(PATHS.dist.html))
         .pipe(browserSync.stream())

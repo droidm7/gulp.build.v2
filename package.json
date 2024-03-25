@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "gulp",
-    "build": "gulp production",
-    "zip": "gulp zip",
+    "build": "cross-env NODE_ENV=production gulp production",
+    "zip": "cross-env NODE_ENV=production gulp zip",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -16,6 +16,7 @@
     "@babel/preset-env": "^7.24.3",
     "babel-loader": "^9.1.3",
     "browser-sync": "^3.0.2",
+    "cross-env": "^7.0.3",
     "del": "^7.1.0",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^9.0.0",

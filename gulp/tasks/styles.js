@@ -9,7 +9,10 @@ import generateHash from '../uttils/generateHash.js'
 import replace from 'gulp-replace'
 import rename from 'gulp-rename'
 import { PATHS } from '../config/PATHS.js'
+import gulpIf from 'gulp-if'
+import { isProduction } from '../uttils/isProduction.js'
 
+const IS_PROD = isProduction()
 const sass = gulpSass(dartSass)
 const hash = generateHash()
 const styleFilename = `style.${hash}.min.css`
@@ -31,12 +34,14 @@ export default function styles() {
             }),
         )
         .pipe(cssmin())
-        .pipe(rename(styleFilename))
+        .pipe(gulpIf(IS_PROD, rename(styleFilename)))
         .pipe(gulp.dest(PATHS.dist.styles))
         .pipe(browserSync.stream())
         .on('end', () => {
+            const replaceName = IS_PROD ? styleFilename : 'style.css'
+
             gulp.src(PATHS.dist.html + '*.html')
-                .pipe(replace('style.[bundle].css', styleFilename))
+                .pipe(replace('style.[bundle].css', replaceName))
                 .pipe(gulp.dest(PATHS.dist.html))
         })
 }

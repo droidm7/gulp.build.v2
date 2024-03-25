@@ -11,8 +11,10 @@ import server from './gulp/tasks/server.js'
 
 gulp.task('build', gulp.parallel(html, styles, images, scripts, fonts))
 
-gulp.task('production', gulp.series(clean, 'build'))
+gulp.task('clean', gulp.series(clean))
 
-gulp.task('zip', gulp.series(clean, 'build', zip))
+gulp.task('production', gulp.series('clean', 'build'))
+
+gulp.task('zip', gulp.series('clean', 'build', zip))
 
 gulp.task('default', gulp.parallel('build', watcher, server))

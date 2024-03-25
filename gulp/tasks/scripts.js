@@ -6,8 +6,11 @@ import notify from 'gulp-notify'
 import replace from 'gulp-replace'
 import rename from 'gulp-rename'
 import generateHash from '../uttils/generateHash.js'
+import gulpIf from 'gulp-if'
 import { PATHS } from '../config/paths.js'
+import { isProduction } from '../uttils/isProduction.js'
 
+const IS_PROD = isProduction()
 const hash = generateHash()
 const jsFileName = `app.${hash}.min.js`
 
@@ -42,12 +45,14 @@ export default function scripts() {
                 },
             }),
         )
-        .pipe(rename(jsFileName))
+        .pipe(gulpIf(IS_PROD, rename(jsFileName)))
         .pipe(gulp.dest(PATHS.dist.scripts))
         .pipe(browserSync.stream())
         .on('end', () => {
+            const replaceName = IS_PROD ? jsFileName : 'app.js'
+
             gulp.src(PATHS.dist.html + '*.html')
-                .pipe(replace('app.[bundle].js', jsFileName))
+                .pipe(replace('app.[bundle].js', replaceName))
                 .pipe(gulp.dest(PATHS.dist.html))
         })
 }
