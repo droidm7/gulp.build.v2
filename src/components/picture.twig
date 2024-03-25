@@ -1,0 +1,8 @@
+{% set BASE_PATH = "./assets/img/" %}
+
+{% macro picture(props) %}
+	<picture class="{{props.className}}">
+		<source type="image/webp" srcset="{{BASE_PATH}}{{props.src}}.webp">
+		<img src="{{BASE_PATH}}{{props.src}}.{{props.ext}}" alt="{{props.alt}}">
+	</picture>
+{% endmacro %}

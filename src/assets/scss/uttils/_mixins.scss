@@ -1,0 +1,22 @@
+@mixin text-line-camp($lines) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+}
+@mixin MQmax($size) {
+    @media screen and (max-width: $size) {
+        @content;
+    }
+}
+@mixin MQmin($size) {
+    @media screen and (min-width: #{$size + 1}) {
+        @content;
+    }
+}
+@mixin MQinside($min, $max) {
+    @media screen and (min-width: $min) {
+        @content;
+    }
+}

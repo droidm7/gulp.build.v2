@@ -1,0 +1,16 @@
+{% macro input(props) %}
+    <div class="fieldset {{props.className}}">
+        {% if props.label %}
+            <label for="field-{{props.name}}-text">
+                {{props.label}}
+            </label>
+        {% endif %}
+        <input 
+            class="fieldset__item" 
+            type="{{props.type}}" 
+            placeholder="{{props.placeholder}}" 
+            name="{{props.name}}"
+            id="field-{{props.name}}-text"
+        >
+    </div>
+{% endmacro %}

@@ -1,0 +1,50 @@
+@import 'vars';
+@import './reset';
+@import './fonts';
+
+// uttils
+@import 'uttils/mixins';
+@import 'uttils/functions';
+
+html {
+    font-size: 16px;
+    @media (min-width: 1921px) {
+        font-size: 0.83vw;
+    }
+    @media (max-width: 1700px) {
+        font-size: 15px;
+    }
+    @media (max-width: 1440px) {
+        font-size: 14px;
+    }
+    @media (max-width: 1180px) {
+        font-size: 13px;
+    }
+    @media (max-width: 992px) {
+        font-size: 16px;
+    }
+}
+
+body {
+    overflow-x: hidden;
+    font-family: $default-font-family;
+}
+
+body.lock {
+    overflow: hidden;
+    touch-action: none;
+}
+
+.site {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    width: 100%;
+    min-height: 100vh;
+    &-top {
+        flex: 1 0 auto;
+    }
+    &-bottom {
+        flex: 0 1 auto;
+    }
+}
