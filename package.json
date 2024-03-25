@@ -6,6 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "gulp",
+    "build": "gulp production",
+    "zip": "gulp zip",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -29,7 +31,9 @@
     "gulp-replace": "^1.1.4",
     "gulp-sass": "^5.1.0",
     "gulp-twig": "^1.2.0",
+    "gulp-watch": "^5.0.1",
     "gulp-webp": "^5.0.0",
+    "gulp-zip": "^6.0.0",
     "sass": "^1.72.0",
     "uuid": "^9.0.1",
     "webpack-stream": "^7.0.0"
