@@ -9,19 +9,18 @@
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital@0;1&family=Roboto&display=swap" rel="stylesheet">
 		<link rel="stylesheet" href="./assets/css/style.css">
-		{% include '../includes/headScripts.nunj' %}
+		{% include '../includes/headScripts.twig' %}
 	</head>
 	<body>
 		<div class="site">
-			<div class="site-top">
-				{% block content %}{% endblock %}
+			<div class="site-top"> {% block content %}{% endblock %}
+				</div>
+				<div class="site-bottom">
+					{% include '../includes/Footer/index.twig' %}
+					{% include '../includes/Footer/sprite.twig' %}
+				</div>
 			</div>
-			<div class="site-bottom">
-				{% include '../includes/Footer/index.nunj' %}
-				{% include '../includes/Footer/sprite.nunj' %}
-			</div>
-		</div>
 
-		<script src="./js/app.js"></script>
-	</body>
-</html>
+			<script src="./js/app.js"></script>
+		</body>
+	</html>

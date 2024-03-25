@@ -3,12 +3,20 @@
   "version": "1.0.0",
   "description": "Сборка GULP для вёрстки",
   "main": "app.js",
+  "type": "module",
   "scripts": {
+    "dev": "gulp",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "gulp": "^4.0.2"
+  "devDependencies": {
+    "browser-sync": "^3.0.2",
+    "gulp": "^4.0.2",
+    "gulp-flatten": "^0.4.0",
+    "gulp-htmlmin": "^5.0.1",
+    "gulp-notify": "^4.0.0",
+    "gulp-plumber": "^1.2.1",
+    "gulp-twig": "^1.2.0"
   }
 }
