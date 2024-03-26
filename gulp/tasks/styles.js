@@ -8,18 +8,20 @@ import browserSync from 'browser-sync'
 import generateHash from '../uttils/generateHash.js'
 import replace from 'gulp-replace'
 import rename from 'gulp-rename'
-import { PATHS } from '../config/PATHS.js'
+import sassGlob from 'gulp-sass-glob'
 import gulpIf from 'gulp-if'
+import { PATHS } from '../config/PATHS.js'
 import { isProduction } from '../uttils/isProduction.js'
 
 const IS_PROD = isProduction()
 const sass = gulpSass(dartSass)
 const hash = generateHash()
-const styleFilename = `style.${hash}.min.css`
+const styleFilename = IS_PROD ? `style.${hash}.min.css` : 'style.css'
 
 export default function styles() {
     return gulp
         .src(PATHS.src.styles)
+        .pipe(sassGlob())
         .pipe(
             sass({
                 outputStyle: 'expanded',
@@ -33,8 +35,8 @@ export default function styles() {
                 overrideBrowserslist: ['last 5 versions'],
             }),
         )
-        .pipe(cssmin())
-        .pipe(gulpIf(IS_PROD, rename(styleFilename)))
+        .pipe(gulpIf(IS_PROD, cssmin()))
+        .pipe(rename(styleFilename))
         .pipe(gulp.dest(PATHS.dist.styles))
         .pipe(browserSync.stream())
         .on('end', () => {

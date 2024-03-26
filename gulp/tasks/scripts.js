@@ -6,13 +6,12 @@ import notify from 'gulp-notify'
 import replace from 'gulp-replace'
 import rename from 'gulp-rename'
 import generateHash from '../uttils/generateHash.js'
-import gulpIf from 'gulp-if'
 import { PATHS } from '../config/paths.js'
 import { isProduction } from '../uttils/isProduction.js'
 
 const IS_PROD = isProduction()
 const hash = generateHash()
-const jsFileName = `app.${hash}.min.js`
+const jsFileName = IS_PROD ? `app.${hash}.min.js` : 'app.js'
 
 export default function scripts() {
     return gulp
@@ -45,7 +44,7 @@ export default function scripts() {
                 },
             }),
         )
-        .pipe(gulpIf(IS_PROD, rename(jsFileName)))
+        .pipe(rename(jsFileName))
         .pipe(gulp.dest(PATHS.dist.scripts))
         .pipe(browserSync.stream())
         .on('end', () => {

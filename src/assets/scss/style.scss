@@ -48,3 +48,15 @@ body.lock {
         flex: 0 1 auto;
     }
 }
+
+// lib
+@import 'lib/**/*.scss';
+
+// components
+@import 'components/**/*.scss';
+
+// block
+@import 'blocks/**/*.scss';
+
+// pages
+@import 'pages/**/*.scss';
