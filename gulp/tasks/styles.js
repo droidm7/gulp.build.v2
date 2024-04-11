@@ -3,7 +3,6 @@ import * as dartSass from 'sass'
 import gulpSass from 'gulp-sass'
 import autoprefixer from 'gulp-autoprefixer'
 import groupCssMediaQueries from 'gulp-group-css-media-queries'
-import cssmin from 'gulp-cssmin'
 import browserSync from 'browser-sync'
 import generateHash from '../uttils/generateHash.js'
 import replace from 'gulp-replace'
@@ -12,6 +11,7 @@ import sassGlob from 'gulp-sass-glob'
 import gulpIf from 'gulp-if'
 import { PATHS } from '../config/PATHS.js'
 import { isProduction } from '../uttils/isProduction.js'
+import gulpCleanCss from 'gulp-clean-css'
 
 const IS_PROD = isProduction()
 const sass = gulpSass(dartSass)
@@ -35,7 +35,7 @@ export default function styles() {
                 overrideBrowserslist: ['last 5 versions'],
             }),
         )
-        .pipe(gulpIf(IS_PROD, cssmin()))
+        .pipe(gulpIf(IS_PROD, gulpCleanCss()))
         .pipe(rename(styleFilename))
         .pipe(gulp.dest(PATHS.dist.styles))
         .pipe(browserSync.stream())
