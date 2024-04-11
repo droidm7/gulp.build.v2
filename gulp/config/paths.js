@@ -6,7 +6,7 @@ const PATHS = {
         styles: 'src/assets/scss/style.scss',
         images: 'src/assets/img/**/*.*{jpg,jpeg,png,gif,svg,ico}',
         fonts: 'src/assets/fonts/**',
-        videos: 'src/assets/videos/**',
+        video: 'src/assets/video/**/*.*',
     },
     dist: {
         html: 'dist/',
@@ -14,7 +14,7 @@ const PATHS = {
         styles: 'dist/assets/css/',
         images: 'dist/assets/img/',
         fonts: 'dist/assets/fonts/',
-        videos: 'dist/assets/videos/',
+        video: 'dist/assets/video/',
     },
     watch: {
         twig: ['src/**/*.twig', 'data.json'],

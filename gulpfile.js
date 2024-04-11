@@ -8,8 +8,9 @@ import images from './gulp/tasks/images.js'
 import zip from './gulp/tasks/zip.js'
 import watcher from './gulp/tasks/watcher.js'
 import server from './gulp/tasks/server.js'
+import video from './gulp/tasks/video.js'
 
-gulp.task('build', gulp.parallel(html, styles, images, scripts, fonts))
+gulp.task('build', gulp.parallel(html, styles, images, scripts, fonts, video))
 
 gulp.task('clean', gulp.series(clean))
 
