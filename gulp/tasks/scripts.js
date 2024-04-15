@@ -5,6 +5,7 @@ import plumber from 'gulp-plumber'
 import notify from 'gulp-notify'
 import replace from 'gulp-replace'
 import rename from 'gulp-rename'
+import { EsbuildPlugin } from 'esbuild-loader'
 import generateHash from '../uttils/generateHash.js'
 import { PATHS } from '../config/paths.js'
 import { isProduction } from '../uttils/isProduction.js'
@@ -28,16 +29,24 @@ export default function scripts() {
                     filename: `app.js`,
                     libraryTarget: 'umd',
                 },
+                optimization: {
+                    minimizer: [
+                        new EsbuildPlugin({
+                            target: 'es2015',
+                        }),
+                    ],
+                },
                 module: {
                     rules: [
                         {
-                            test: /\.js$/,
+                            test: /\.m?js$/,
                             exclude: /node_modules/,
                             use: {
-                                loader: 'babel-loader',
-                                options: {
-                                    presets: ['@babel/preset-env'],
-                                },
+                                loader: 'esbuild-loader',
+                                options: { target: 'es2015' },
+                            },
+                            resolve: {
+                                fullySpecified: false,
                             },
                         },
                     ],
