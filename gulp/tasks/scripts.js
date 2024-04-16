@@ -5,6 +5,7 @@ import plumber from 'gulp-plumber'
 import notify from 'gulp-notify'
 import replace from 'gulp-replace'
 import rename from 'gulp-rename'
+import gulpIf from 'gulp-if'
 import { EsbuildPlugin } from 'esbuild-loader'
 import generateHash from '../uttils/generateHash.js'
 import { PATHS } from '../config/paths.js'
@@ -12,7 +13,7 @@ import { isProduction } from '../uttils/isProduction.js'
 
 const IS_PROD = isProduction()
 const hash = generateHash()
-const jsFileName = IS_PROD ? `app.${hash}.min.js` : 'app.js'
+const jsFileName = `app.${hash}.min.js`
 
 export default function scripts() {
     return gulp
@@ -53,14 +54,20 @@ export default function scripts() {
                 },
             }),
         )
-        .pipe(rename(jsFileName))
+        .pipe(gulpIf(IS_PROD, rename(jsFileName)))
         .pipe(gulp.dest(PATHS.dist.scripts))
         .pipe(browserSync.stream())
         .on('end', () => {
-            const replaceName = IS_PROD ? jsFileName : 'app.js'
+            if (!IS_PROD) return
+
+            const regexp = /(src="\.\/js\/)app.js(")/gi
 
             gulp.src(PATHS.dist.html + '*.html')
-                .pipe(replace('app.[bundle].js', replaceName))
+                .pipe(
+                    replace(regexp, (_, $1, $2) => {
+                        return `${$1}${jsFileName}${$2}`
+                    }),
+                )
                 .pipe(gulp.dest(PATHS.dist.html))
         })
 }

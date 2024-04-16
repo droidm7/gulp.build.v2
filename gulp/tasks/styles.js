@@ -16,7 +16,7 @@ import gulpCleanCss from 'gulp-clean-css'
 const IS_PROD = isProduction()
 const sass = gulpSass(dartSass)
 const hash = generateHash()
-const styleFilename = IS_PROD ? `style.${hash}.min.css` : 'style.css'
+const styleFilename = `style.${hash}.min.css`
 
 export default function styles() {
     return gulp
@@ -36,14 +36,20 @@ export default function styles() {
             }),
         )
         .pipe(gulpIf(IS_PROD, gulpCleanCss()))
-        .pipe(rename(styleFilename))
+        .pipe(gulpIf(IS_PROD, rename(styleFilename)))
         .pipe(gulp.dest(PATHS.dist.styles))
         .pipe(browserSync.stream())
         .on('end', () => {
-            const replaceName = IS_PROD ? styleFilename : 'style.css'
+            if (!IS_PROD) return
+
+            const regexp = /(href="\.\/assets\/css\/)style\.css(")/gi
 
             gulp.src(PATHS.dist.html + '*.html')
-                .pipe(replace('style.[bundle].css', replaceName))
+                .pipe(
+                    replace(regexp, (_, $1, $2) => {
+                        return `${$1}${styleFilename}${$2}`
+                    }),
+                )
                 .pipe(gulp.dest(PATHS.dist.html))
         })
 }
