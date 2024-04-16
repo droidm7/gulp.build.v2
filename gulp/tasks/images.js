@@ -24,11 +24,13 @@ export default function images() {
             ),
         )
         .pipe(gulp.dest(PATHS.dist.images))
+        .pipe(gulp.src(PATHS.src.images))
+        .pipe(newer(PATHS.dist.images))
+        .pipe(
+            webp({
+                quality: 90,
+            }),
+        )
+        .pipe(gulp.dest(PATHS.dist.images))
         .pipe(browserSync.stream())
-        .on('end', () => {
-            gulp.src(PATHS.dist.images + '**/*.*')
-                .pipe(newer(PATHS.dist.images))
-                .pipe(webp())
-                .pipe(gulp.dest(PATHS.dist.images))
-        })
 }
