@@ -3,7 +3,7 @@ import newer from 'gulp-newer'
 import browserSync from 'browser-sync'
 import { PATHS } from '../config/paths.js'
 
-export default function fonts() {
+export default function video() {
     return gulp
         .src(PATHS.src.video)
         .pipe(newer(PATHS.dist.video))
